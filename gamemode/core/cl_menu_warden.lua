@@ -109,8 +109,8 @@ function JB.MENU_WARDEN()
 		
 		yBottom = lbl.y + lbl:GetTall();
 		
-		addButton(false,"War Day",function() RunConsoleCommand("jb_warden_day","WarDay") end);
-		addButton(false,"Hide and Seek Day",function() RunConsoleCommand("jb_warden_day","HideSeekDay") end);
+		--addButton(false,"War Day",function() RunConsoleCommand("jb_warden_day","WarDay") end);
+		--addButton(false,"Hide and Seek Day",function() RunConsoleCommand("jb_warden_day","HideSeekDay") end);
 		
 		frame:SetTall(yBottom+15);
 		frame:Center();
