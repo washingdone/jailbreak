@@ -119,6 +119,28 @@ concommand.Add("jb_warden_spawn",function(p,c,a)
 	end
 end);
 
+concommand.Add("jb_warden_day",function(p,c,a)
+	if not IsValid(p) or not p.GetWarden or not p:GetWarden() or not tobool(JB.Config.wardenControl) then return end
+	
+	local opt = a[1];
+	
+	if not opt then 
+		return
+	elseif opt == "WarDay" then
+		JB:BroadcastNotification("Today is a War Day!");
+		JB:BroadcastNotification("All prisoners are allowed to have weapons.");
+		JB:BroadcastNotification("Warden must open cell doors by 9:00.");
+		JB:BroadcastNotification("All prisoners are KOS 30 seconds after the cell doors open.");
+	elseif opt == "HideSeekDay" then
+		JB:BroadcastNotification("Today is a Hide and Seek Day!");
+		JB:BroadcastNotification("All Guards must stay in the armory until 30 seconds after the cell doors open.");
+		JB:BroadcastNotification("All Prisoners must hide from the guards.");
+		JB:BroadcastNotification("Warden must open cell doors by 9:00.");
+		JB:BroadcastNotification("All prisoners are KOS 30 seconds after the cell doors open.");
+	end
+end);
+
+
 local pointerRemove = -1;
 concommand.Add("jb_warden_placepointer",function(p,c,a)
 	if not IsValid(p) or not p.GetWarden or not p:GetWarden() then return end

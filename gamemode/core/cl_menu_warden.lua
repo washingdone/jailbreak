@@ -100,6 +100,17 @@ function JB.MENU_WARDEN()
 		addButton(false,"Spawn breakable crate",function() RunConsoleCommand("jb_warden_spawn","Crate") end);
 		addButton(false,"Spawn blockade",function() RunConsoleCommand("jb_warden_spawn","Blockade") end);
 		
+		yBottom = yBottom+16;
+		local lbl = Label("Prebuilt Days",frame);
+				lbl:SetFont("JBLarge");
+				lbl:SetColor(JB.Color["#EEE"]);
+				lbl:SizeToContents();
+				lbl:SetPos(15,yBottom + 15);
+		
+		yBottom = lbl.y + lbl:GetTall();
+		
+		addButton(false,"War Day",function() RunConsoleCommand("jb_warden_day","WarDay") end);
+		addButton(false,"Hide and Seek Day",function() RunConsoleCommand("jb_warden_day","HideSeekDay") end);
 		
 		frame:SetTall(yBottom+15);
 		frame:Center();
@@ -108,7 +119,7 @@ function JB.MENU_WARDEN()
 		frame = vgui.Create("JB.Frame");
 		frame:SetTitle("Claim warden");
 		
-		local lbl = Label("Do not claim warden if you don't own a microphone or can't use your microphone.\nDistorted microphone owners and children ('squeekers') are not allowed to claim warden.",frame);
+		local lbl = Label("Do not claim warden if you don't own a microphone or can't use your microphone.\n Distorted microphone owners are not allowed to claim warden.\n \n Things to remember:\n 1)When giving orders you MUST say no detours or delays. If you don't it is a freeday.\n 2)Cell doors must be open by 9:00 or it is a freeday. The cells must remain open after the first time they are opened.\n 3)You can not make Microphones or Fists KOS.\n 4)Friendly fire is allowed once every three rounds.\n 5)Warday/Seigeday can only be done once every 3 rounds.\n 6)Prisoners do NOT get LR on freedays.\n \n Banned days:\n 1)Isolation Day\n 2)Bloodbath Day\n 3)Extermination Day\n 4)Random Day\n Doing any of those days, even under a different name, is NOT allowed.",frame);
 		lbl:SetFont("JBSmall");
 		lbl:SetColor(color_text);
 		lbl:SizeToContents();
