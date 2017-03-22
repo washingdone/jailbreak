@@ -361,17 +361,17 @@ local drawGreenWardenPointer = function()
 
 	greenMarker= greenWardenMarkers[JB.TRANSMITTER:GetJBWarden_GreenPointerType()];
 
-	color_green_marker.a = (posGreenMarkerScreen.x ~= x or posGreenMarkerScreen.y ~= y+8) and 100 or 255;
-	color_green_marker_dark.a = color_green_marker.a;
+	color_marker.a = (posGreenMarkerScreen.x ~= x or posGreenMarkerScreen.y ~= y+8) and 100 or 255;
+	color_marker_dark.a = color_marker.a;
 	setMaterial(greenMarker.icon);
 
-	setDrawColor(color_green_marker);
+	setDrawColor(color_marker);
 	drawTexturedRect(x-16,y-16,32,32);
 
-	drawSimpleShadowText(greenMarker.text,"JBNormal",x,y+16,color_green_marker,1,0);
+	drawSimpleShadowText(greenMarker.text,"JBNormal",x,y+16,color_marker,1,0);
 
 	// note: 64unit = 1.22meters
-	drawSimpleShadowText(tostring(math.floor(LocalPlayer():EyePos():Distance(JB.TRANSMITTER:GetJBWarden_GreenPointerPos()) * 1.22/64)).."m","JBSmall",x,y+34,color_green_marker,1,0);
+	drawSimpleShadowText(tostring(math.floor(LocalPlayer():EyePos():Distance(JB.TRANSMITTER:GetJBWarden_GreenPointerPos()) * 1.22/64)).."m","JBSmall",x,y+34,color_marker,1,0);
 end
 
 // GM HOOK
