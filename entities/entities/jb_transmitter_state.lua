@@ -51,10 +51,12 @@ function ENT:SetupDataTables()
 	self:NetworkVar( "Int",	1, "JBRoundsPassed" );
 	
 	self:NetworkVar( "Vector", 0, "JBWarden_PointerPos")
-
+	self:NetworkVar( "Vector", 1, "JBWarden_GreenPointerPos")
+	
 	self:NetworkVar( "String", 0, "JBLastRequestPicked" );
 	self:NetworkVar( "String", 1, "JBWarden_PointerType");
-		
+	self:NetworkVar( "String", 2, "JBWarden_GreenPointerType");
+	
 	self:NetworkVar( "Float", 0, "JBRoundStartTime" );
 		
 	self:NetworkVar( "Entity", 0, "JBLastRequestPrisoner" );
@@ -69,7 +71,9 @@ function ENT:SetupDataTables()
 		self:SetJBState(STATE_IDLE);
 		self:SetJBRoundsPassed(0);
 		self:SetJBWarden_PointerType("0");
+		self:SetJBWarden_GreenPointerType("0");
 		self:SetJBWarden_PointerPos(Vector(0,0,0));
+		self:SetJBWarden_GreenPointerPos(Vector(0,0,0));
 	end
 end
 function ENT:UpdateTransmitState()

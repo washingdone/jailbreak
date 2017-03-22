@@ -160,6 +160,24 @@ concommand.Add("jb_warden_placepointer",function(p,c,a)
 	hook.Call("JailBreakWardenPlacePointer",JB.Gamemode,p,typ,pos);
 end);
 
+concommand.Add("jb_warden_placegreenpointer",function(p,c,a)
+	if not IsValid(p) or not p.GetWarden or not p:GetWarden() then return end
+
+	local typ = tostring(a[1]);
+	if not typ then return end;
+	local pos = p:GetEyeTrace().HitPos;
+
+	JB:DebugPrint("Warden "..p:Nick().." has placed a marker at "..tostring(pos));
+	JB:BroadcastQuickNotification("The warden has placed a marker");
+
+	pointerRemove = CurTime()+120;
+
+	JB.TRANSMITTER:SetJBWarden_GreenPointerPos(pos);
+	JB.TRANSMITTER:SetJBWarden_GreenPointerType(typ);
+
+	hook.Call("JailBreakWardenPlacePointer",JB.Gamemode,p,typ,pos);
+end);
+
 hook.Add("Think","JB.Think.PointerTimeout",function()
 	if CurTime() > pointerRemove and pointerRemove ~= -1 then
 		JB.TRANSMITTER:SetJBWarden_PointerType("0");

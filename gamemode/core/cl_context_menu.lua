@@ -160,13 +160,20 @@ concommand.Add( "+menu_context",function()
 
 		bubbles = {};
 
-		addBubble("Move",Material("jailbreak_excl/pointers/generic.png"),function() RunConsoleCommand("jb_warden_placepointer","generic") end)
-		addBubble("Attack",Material("jailbreak_excl/pointers/exclamation.png"),function() RunConsoleCommand("jb_warden_placepointer","exclamation") end)
-		addBubble("Check out",Material("jailbreak_excl/pointers/question.png"),function() RunConsoleCommand("jb_warden_placepointer","question") end)
-		addBubble("Line up",Material("jailbreak_excl/pointers/line.png"),function() RunConsoleCommand("jb_warden_placepointer","line") end)
-		addBubble("Avoid",Material("jailbreak_excl/pointers/cross.png"),function() RunConsoleCommand("jb_warden_placepointer","cross") end)
-		addBubble("None",nil,function() RunConsoleCommand("jb_warden_placepointer","0") end)
-
+		addBubble("Move- White",Material("jailbreak_excl/pointers/generic.png"),function() RunConsoleCommand("jb_warden_placepointer","generic") end)
+		addBubble("Attack- White",Material("jailbreak_excl/pointers/exclamation.png"),function() RunConsoleCommand("jb_warden_placepointer","exclamation") end)
+		addBubble("Check out- White",Material("jailbreak_excl/pointers/question.png"),function() RunConsoleCommand("jb_warden_placepointer","question") end)
+		addBubble("Line up- White",Material("jailbreak_excl/pointers/line.png"),function() RunConsoleCommand("jb_warden_placepointer","line") end)
+		addBubble("Avoid- White",Material("jailbreak_excl/pointers/cross.png"),function() RunConsoleCommand("jb_warden_placepointer","cross") end)
+		addBubble("None- White",nil,function() RunConsoleCommand("jb_warden_placepointer","0") end)
+		
+		addBubble("Move- Green",Material("jailbreak_excl/pointers/generic_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","generic") end)
+		addBubble("Attack- Green",Material("jailbreak_excl/pointers/exclamation_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","exclamation") end)
+		addBubble("Check out- Green",Material("jailbreak_excl/pointers/question_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","question") end)
+		addBubble("Line up- Green",Material("jailbreak_excl/pointers/line_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","line") end)
+		addBubble("Avoid- Green",Material("jailbreak_excl/pointers/cross_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","cross") end)
+		addBubble("None- Green",nil,function() RunConsoleCommand("jb_warden_placegreenpointer","0") end)
+		
 		gui.EnableScreenClicker(true);
 		contextEnabled = true;
 

@@ -87,6 +87,13 @@ wardenMarkers["question"] = {text="Check out",icon=Material("jailbreak_excl/poin
 wardenMarkers["line"] = {text="Line up",icon=Material("jailbreak_excl/pointers/line.png")}
 wardenMarkers["cross"] = {text="Avoid",icon=Material("jailbreak_excl/pointers/cross.png")}
 
+local greenWardenMarkers = {}
+greenWardenMarkers["generic"] = {text="Move",icon=Material("jailbreak_excl/pointers/generic_green.png")}
+greenWardenMarkers["exclamation"] = {text="Attack",icon=Material("jailbreak_excl/pointers/exclamation_green.png")}
+greenWardenMarkers["question"] = {text="Check out",icon=Material("jailbreak_excl/pointers/question_green.png")}
+greenWardenMarkers["line"] = {text="Line up",icon=Material("jailbreak_excl/pointers/line_green.png")}
+greenWardenMarkers["cross"] = {text="Avoid",icon=Material("jailbreak_excl/pointers/cross_green.png")}
+
 local x,y,width,height; -- reusables;
 local ply,dt,state,scrW,scrH; --predefined variables for every HUD loop
 
@@ -345,6 +352,28 @@ local drawWardenPointer = function()
 	drawSimpleShadowText(tostring(math.floor(LocalPlayer():EyePos():Distance(JB.TRANSMITTER:GetJBWarden_PointerPos()) * 1.22/64)).."m","JBSmall",x,y+34,color_marker,1,0);
 end
 
+local posGreenMarkerScreen,greenMarker;
+local drawGreenWardenPointer = function()
+	posGreenMarkerScreen = (JB.TRANSMITTER:GetJBWarden_GreenPointerPos()):ToScreen();
+
+	x = clamp(posGreenMarkerScreen.x,32,scrW-64);
+	y = clamp(posGreenMarkerScreen.y,32,scrH-64) - 8;
+
+	greenMarker= greenWardenMarkers[JB.TRANSMITTER:GetJBWarden_GreenPointerType()];
+
+	color_green_marker.a = (posGreenMarkerScreen.x ~= x or posGreenMarkerScreen.y ~= y+8) and 100 or 255;
+	color_green_marker_dark.a = color_green_marker.a;
+	setMaterial(greenMarker.icon);
+
+	setDrawColor(color_green_marker);
+	drawTexturedRect(x-16,y-16,32,32);
+
+	drawSimpleShadowText(greenMarker.text,"JBNormal",x,y+16,color_green_marker,1,0);
+
+	// note: 64unit = 1.22meters
+	drawSimpleShadowText(tostring(math.floor(LocalPlayer():EyePos():Distance(JB.TRANSMITTER:GetJBWarden_GreenPointerPos()) * 1.22/64)).."m","JBSmall",x,y+34,color_green_marker,1,0);
+end
+
 // GM HOOK
 local hookCall = hook.Call;
 JB.Gamemode.HUDPaint = function(gm)
@@ -388,6 +417,10 @@ JB.Gamemode.HUDPaint = function(gm)
 
 	if IsValid(JB.TRANSMITTER) and JB.TRANSMITTER:GetJBWarden_PointerPos() and JB.TRANSMITTER:GetJBWarden_PointerType() and wardenMarkers[JB.TRANSMITTER:GetJBWarden_PointerType()] then
 		drawWardenPointer();
+	end
+	
+	if IsValid(JB.TRANSMITTER) and JB.TRANSMITTER:GetJBWarden_GreenPointerPos() and JB.TRANSMITTER:GetJBWarden_GreenPointerType() and greenWardenMarkers[JB.TRANSMITTER:GetJBWarden_GreenPointerType()] then
+		drawGreenWardenPointer();
 	end
 
 	JB.Gamemode:HUDDrawTargetID();  -- not calling hook, we don't want any addons messing with this.
