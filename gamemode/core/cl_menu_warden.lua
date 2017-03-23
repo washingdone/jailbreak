@@ -92,6 +92,8 @@ function JB.MENU_WARDEN()
 			lbl_DayName:SizeToContents();
 
 			lbl_DayDetails:SetPos(20,lbl_DayName.y + lbl_DayName:GetTall() + 16);
+			lbl_DayDetails:SetSize(right:GetWide() - 40,right:GetTall() - lbl_DayDetails.y - 30-30-32);
+			lbl_DayDetails:SetText(Day:GetDescription());
 			lbl_DayDetails:SetWrap(true);
 
 			day_selected = day;
