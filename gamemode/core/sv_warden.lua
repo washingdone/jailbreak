@@ -181,5 +181,6 @@ end);
 hook.Add("Think","JB.Think.PointerTimeout",function()
 	if CurTime() > pointerRemove and pointerRemove ~= -1 then
 		JB.TRANSMITTER:SetJBWarden_PointerType("0");
+		JB.TRANSMITTER:SetJBWarden_GreenPointerType("0");
 	end
 end);
