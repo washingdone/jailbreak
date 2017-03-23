@@ -33,6 +33,7 @@
 
 
 local color_text = Color(230,230,230,200);
+local matGradient = Material("materials/jailbreak_excl/gradient.png");
 
 local frame;
 function JB.MENU_WARDEN()
@@ -41,9 +42,108 @@ function JB.MENU_WARDEN()
 	if LocalPlayer().GetWarden and LocalPlayer():GetWarden() and tobool(JB.Config.wardenControl) then
 		frame = vgui.Create("JB.Frame");
 		frame:SetTitle("Warden controls");
-		frame:SetWide(320);
+		frame:SetWide(620);
 		
-		local yBottom = 30;
+		local left = frame:Add("JB.Panel");
+		left:SetSize(math.Round(frame:GetWide() * .35) - 15,412);
+		left:SetPos(10,40);
+		
+		local right = frame:Add("JB.Panel");
+		right:SetSize(math.Round(frame:GetWide() * .65) - 15,412);
+		right:SetPos(left:GetWide() + left.x + 10,40);
+		
+		frame:SetTall(math.Round(right:GetTall() + 50))
+		
+		
+		-- populate right panel
+		local day_selected;
+		local lbl_DayName = Label("",right);
+		lbl_DayName:SetPos(20,20);
+		lbl_DayName:SetFont("JBLarge");
+		lbl_DayName:SizeToContents();
+		lbl_DayName:SetColor(color_text);
+
+		local lbl_DayDetails = Label("",right);
+		lbl_DayDetails:SetPos(20,lbl_DayName.y + lbl_DayName:GetTall() + 16);
+		lbl_DayDetails:SetColor(color_text);
+		lbl_DayDetails:SetFont("JBSmall");
+		lbl_DayDetails:SetSize(right:GetWide() - 40,right:GetTall() - lbl_DayDetails.y - 30-30-32);
+		lbl_DayDetails:SetWrap(true);
+		lbl_DayDetails:SizeToContents();
+
+		local btn_accept = right:Add("JB.Button");
+		btn_accept:SetSize(right:GetWide() - 60,32);
+		btn_accept:SetPos(30,right:GetTall() - 30 - btn_accept:GetTall());
+		btn_accept:SetText("Start Day");
+		btn_accept.OnMouseReleased = (function()
+			RunConsoleCommand("jb_warden_day",day_selected:GetID(),(table.Random(tab)):EntIndex());
+		end);
+		btn_accept:SetVisible(false);
+		
+		
+		--populate left panel
+		local function selectDay(day)
+			if not JB.ValidLR(day) then return end
+
+
+			btn_accept:SetVisible(true);
+
+			lbl_LRName:SetText(lr:GetName());
+			lbl_LRName:SizeToContents();
+
+			lbl_LRDetails:SetPos(20,lbl_LRName.y + lbl_LRName:GetTall() + 16);
+			lbl_LRDetails:SetSize(right:GetWide() - 40,right:GetTall() - lbl_LRDetails.y - 30-30-32);
+			lbl_LRDetails:SetText(lr:GetDescription());
+			lbl_LRDetails:SetWrap(true);
+
+			lr_selected = lr;
+		end
+
+		left:DockMargin(0,0,0,0);
+
+		for k,v in pairs(JB.LastRequestTypes)do
+			local pnl = vgui.Create("JB.Panel",left);
+			pnl:SetTall(26);
+			pnl:Dock(TOP);
+			pnl:DockMargin(6,6,6,0);
+			pnl.a = 80;
+			pnl.Paint = function(self,w,h)
+				draw.RoundedBox(4,0,0,w,h,JB.Color["#777"]);
+				
+				self.a = Lerp(0.1,self.a,self.Hover and 140 or 80);
+
+				surface.SetMaterial(matGradient);
+				surface.SetDrawColor(Color(0,0,0,self.a));
+				surface.DrawTexturedRectRotated(w/2,h/2,w,h,180);
+
+				surface.SetDrawColor(JB.Color.white);
+				surface.SetMaterial(v:GetIcon());
+				surface.DrawTexturedRect(5,5,16,16);
+
+				draw.SimpleText(v:GetName(),"JBNormal",28,h/2,JB.Color.white,0,1);
+			end
+
+			local dummy = vgui.Create("Panel",pnl);
+			dummy:SetSize(pnl:GetWide(),pnl:GetTall());
+			dummy:SetPos(0,0);
+			dummy.OnMouseReleased = function()
+				selectDay(v);
+			end
+			dummy.OnCursorEntered = function()
+				pnl.Hover = true;
+			end
+			dummy.OnCursorExited=function()
+				pnl.Hover = false;
+			end
+
+			pnl.PerformLayout = function(self)
+				dummy:SetSize(self:GetWide(),self:GetTall());
+			end
+		end
+		
+		--[[local yBottom = 30;
+		
+		
 		
 		local lbl = Label("Game options",frame);
 				lbl:SetFont("JBLarge");
@@ -114,7 +214,7 @@ function JB.MENU_WARDEN()
 		
 		frame:SetTall(yBottom+15);
 		frame:Center();
-		frame:MakePopup();
+		frame:MakePopup();]]--
 	elseif JB.State == STATE_SETUP and not IsValid(JB:GetWarden()) then
 		frame = vgui.Create("JB.Frame");
 		frame:SetTitle("Claim warden");
