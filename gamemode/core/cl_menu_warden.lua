@@ -76,32 +76,30 @@ function JB.MENU_WARDEN()
 		btn_accept:SetPos(30,right:GetTall() - 30 - btn_accept:GetTall());
 		btn_accept:SetText("Start Day");
 		btn_accept.OnMouseReleased = (function()
-			RunConsoleCommand("jb_warden_day",day_selected:GetID(),(table.Random(tab)):EntIndex());
+			RunConsoleCommand("jb_day_start",day_selected:GetID()));
 		end);
 		btn_accept:SetVisible(false);
 		
 		
 		--populate left panel
 		local function selectDay(day)
-			if not JB.ValidLR(day) then return end
+			if not JB.ValidDay(day) then return end
 
 
 			btn_accept:SetVisible(true);
 
-			lbl_LRName:SetText(lr:GetName());
-			lbl_LRName:SizeToContents();
+			lbl_DayName:SetText(Day:GetName());
+			lbl_DayName:SizeToContents();
 
-			lbl_LRDetails:SetPos(20,lbl_LRName.y + lbl_LRName:GetTall() + 16);
-			lbl_LRDetails:SetSize(right:GetWide() - 40,right:GetTall() - lbl_LRDetails.y - 30-30-32);
-			lbl_LRDetails:SetText(lr:GetDescription());
-			lbl_LRDetails:SetWrap(true);
+			lbl_DayDetails:SetPos(20,lbl_DayName.y + lbl_DayName:GetTall() + 16);
+			lbl_DayDetails:SetWrap(true);
 
-			lr_selected = lr;
+			day_selected = day;
 		end
 
 		left:DockMargin(0,0,0,0);
 
-		for k,v in pairs(JB.LastRequestTypes)do
+		for k,v in pairs(JB.DayTypes)do
 			local pnl = vgui.Create("JB.Panel",left);
 			pnl:SetTall(26);
 			pnl:Dock(TOP);

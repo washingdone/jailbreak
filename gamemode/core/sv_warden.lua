@@ -119,7 +119,7 @@ concommand.Add("jb_warden_spawn",function(p,c,a)
 	end
 end);
 
-concommand.Add("jb_warden_day",function(p,c,a)
+--[[concommand.Add("jb_warden_day",function(p,c,a)
 	if not IsValid(p) or not p.GetWarden or not p:GetWarden() or not tobool(JB.Config.wardenControl) then return end
 	
 	local opt = a[1];
@@ -138,7 +138,7 @@ concommand.Add("jb_warden_day",function(p,c,a)
 		JB:BroadcastNotification("Warden must open cell doors by 9:00.");
 		JB:BroadcastNotification("All prisoners are KOS 30 seconds after the cell doors open.");
 	end
-end);
+end);]]--
 
 
 local pointerRemove = -1;
