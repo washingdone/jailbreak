@@ -88,11 +88,11 @@ wardenMarkers["line"] = {text="Line up",icon=Material("jailbreak_excl/pointers/l
 wardenMarkers["cross"] = {text="Avoid",icon=Material("jailbreak_excl/pointers/cross.png")}
 
 local greenWardenMarkers = {}
-greenWardenMarkers["generic"] = {text="Move",icon=Material("jailbreak_excl/pointers/generic_green.png")}
-greenWardenMarkers["exclamation"] = {text="Attack",icon=Material("jailbreak_excl/pointers/exclamation_green.png")}
-greenWardenMarkers["question"] = {text="Check out",icon=Material("jailbreak_excl/pointers/question_green.png")}
-greenWardenMarkers["line"] = {text="Line up",icon=Material("jailbreak_excl/pointers/line_green.png")}
-greenWardenMarkers["cross"] = {text="Avoid",icon=Material("jailbreak_excl/pointers/cross_green.png")}
+greenWardenMarkers["generic"] = {text="Move",icon=Material("jailbreak_washingdone/pointers/generic_green.png")}
+greenWardenMarkers["exclamation"] = {text="Attack",icon=Material("jailbreak_washingdone/pointers/exclamation_green.png")}
+greenWardenMarkers["question"] = {text="Check out",icon=Material("jailbreak_washingdone/pointers/question_green.png")}
+greenWardenMarkers["line"] = {text="Line up",icon=Material("jailbreak_washingdone/pointers/line_green.png")}
+greenWardenMarkers["cross"] = {text="Avoid",icon=Material("jailbreak_washingdone/pointers/cross_green.png")}
 
 local x,y,width,height; -- reusables;
 local ply,dt,state,scrW,scrH; --predefined variables for every HUD loop

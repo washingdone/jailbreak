@@ -167,11 +167,11 @@ concommand.Add( "+menu_context",function()
 		addBubble("Avoid- White",Material("jailbreak_excl/pointers/cross.png"),function() RunConsoleCommand("jb_warden_placepointer","cross") end)
 		addBubble("None- White",nil,function() RunConsoleCommand("jb_warden_placepointer","0") end)
 		
-		addBubble("Move- Green",Material("jailbreak_excl/pointers/generic_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","generic") end)
-		addBubble("Attack- Green",Material("jailbreak_excl/pointers/exclamation_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","exclamation") end)
-		addBubble("Check out- Green",Material("jailbreak_excl/pointers/question_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","question") end)
-		addBubble("Line up- Green",Material("jailbreak_excl/pointers/line_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","line") end)
-		addBubble("Avoid- Green",Material("jailbreak_excl/pointers/cross_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","cross") end)
+		addBubble("Move- Green",Material("jailbreak_washingdone/pointers/generic_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","generic") end)
+		addBubble("Attack- Green",Material("jailbreak_washingdone/pointers/exclamation_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","exclamation") end)
+		addBubble("Check out- Green",Material("jailbreak_washingdone/pointers/question_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","question") end)
+		addBubble("Line up- Green",Material("jailbreak_washingdone/pointers/line_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","line") end)
+		addBubble("Avoid- Green",Material("jailbreak_washingdone/pointers/cross_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","cross") end)
 		addBubble("None- Green",nil,function() RunConsoleCommand("jb_warden_placegreenpointer","0") end)
 		
 		gui.EnableScreenClicker(true);
