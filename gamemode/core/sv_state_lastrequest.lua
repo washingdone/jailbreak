@@ -32,7 +32,7 @@
 
 
 function JB:CanLastRequest()
-	return JB:AliveGuards() >= 1 and JB:AlivePrisoners() == 1 and (JB.State == STATE_PLAYING or (JB.State == STATE_LASTREQUEST and not JB.ValidLR(JB.LastRequestTypes[JB.LastRequest])) or JB.State == STATE_SETUP);
+	return JB:AliveGuards() >= 1 and JB:AlivePrisoners() == 1 and (JB.State == STATE_PLAYING or JB.State == STATE_DAY or (JB.State == STATE_LASTREQUEST and not JB.ValidLR(JB.LastRequestTypes[JB.LastRequest])) or JB.State == STATE_SETUP);
 end
 
 

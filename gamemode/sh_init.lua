@@ -180,4 +180,4 @@ end
 
 JB.Util = {};
 
-assert(loadFolder("util") and loadFolder("core") and loadFolder("classes","sh") and loadFolder("lastrequests","sh") and loadFolder("vgui","cl"),"Failed to load Jail Break 7! Contact a developer!") 
+assert(loadFolder("util") and loadFolder("core") and loadFolder("classes","sh") and loadFolder("days","sh") and loadFolder("lastrequests","sh") and loadFolder("vgui","cl"),"Failed to load Jail Break 7! Contact a developer!") 
