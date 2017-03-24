@@ -296,6 +296,7 @@ function JB:NewRound(rounds_passed)
 			JB.TRANSMITTER:SetJBWarden_PVPDamage(false);
 			JB.TRANSMITTER:SetJBWarden_ItemPickup(false);
 			JB.TRANSMITTER:SetJBWarden_PointerType("0");
+			JB.TRANSMITTER:SetJBWarden_GreenPointerType("0");
 			JB.TRANSMITTER:SetJBWarden(NULL);
 		end
 
