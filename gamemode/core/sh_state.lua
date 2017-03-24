@@ -130,7 +130,7 @@ STATE_PLAYING = 3; -- normal playing
 STATE_LASTREQUEST = 4; -- last request taking place, special rules apply
 STATE_ENDED = 5; -- round ended, waiting for next round to start
 STATE_MAPVOTE = 6; -- voting for a map, will result in either a new map loading or restarting the current without reloading
-
+STATE_DAY = 7; 
 /*
 
 Network strings
@@ -361,7 +361,7 @@ elseif SERVER then
 			end
 		end
 
-		if (JB.State ~= STATE_PLAYING and JB.State ~= STATE_SETUP and JB.State ~= STATE_LASTREQUEST) or #team.GetPlayers(TEAM_GUARD) < 1 or #team.GetPlayers(TEAM_PRISONER) < 1 then return end
+		if (JB.State ~= STATE_PLAYING and JB.State ~= STATE_SETUP and JB.State ~= STATE_LASTREQUEST and JB.State ~= STATE_DAY) or #team.GetPlayers(TEAM_GUARD) < 1 or #team.GetPlayers(TEAM_PRISONER) < 1 then return end
 
 		local count_guard = JB:AliveGuards();
 		local count_prisoner = JB:AlivePrisoners();
@@ -473,6 +473,34 @@ JB._IndexCallback.RoundStartTime = {
 		else
 			Error("Can not set round start time!");
 		end
+	end
+}
+
+//
+JB._IndexCallback.Day = {
+	get = function()
+		return (JB.State == STATE_DAY) and JB.TRANSMITTER:GetJBDayPicked() or "0";
+	end,
+	set = function(tab)
+		if not IsValid(JB.TRANSMITTER) or not SERVER then return end
+
+		if not tab or type(tab) ~= "table" or not tab.type or not JB.ValidDay(JB.DayTypes[tab.type]) then
+			JB.TRANSMITTER:SetJBDayPicked("0");
+			if not pcall(function() JB:DebugPrint("Attempted to select invalid day: ",tab.type," ",type(tab)); end) then JB:DebugPrint("Unexptected day sequence abortion!"); end
+			return
+		end
+
+		JB.TRANSMITTER:SetJBDayPicked(tab.type);
+
+		chainState(STATE_DAY,180,function() JB:EndRound() end)
+
+		JB.RoundStartTime = CurTime();
+		JB:BroadcastNotification("The warden has selected a pre-built day!");
+		JB:DebugPrint("Day Initiated!");
+
+		timer.Simple(.5,function()
+			JB.DayTypes[tab.type].startCallback();
+		end)
 	end
 }
 
