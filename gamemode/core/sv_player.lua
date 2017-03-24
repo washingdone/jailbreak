@@ -82,7 +82,7 @@ JB.Gamemode.PlayerCanPickupWeapon = function( gm, ply, entity )
 end
 
 JB.Gamemode.PlayerShouldTakeDamage = function(gm,a,b)
-	if IsValid(a) and IsValid(b) and a:IsPlayer() and b:IsPlayer() and a:Team() == b:Team() and (JB.State == STATE_SETUP or JB.State == STATE_PLAYING or JB.State == STATE_LASTREQUEST) and (not IsValid(JB.TRANSMITTER) or a:Team() ~= TEAM_PRISONER or not JB.TRANSMITTER:GetJBWarden_PVPDamage()) then
+	if IsValid(a) and IsValid(b) and a:IsPlayer() and b:IsPlayer() and a:Team() == b:Team() and (JB.State == STATE_SETUP or JB.State == STATE_PLAYING or JB.State == STATE_LASTREQUEST or JB.State == STATE_DAY) and (not IsValid(JB.TRANSMITTER) or a:Team() ~= TEAM_PRISONER or not JB.TRANSMITTER:GetJBWarden_PVPDamage()) then
 		return false
 	end
 	return true;
@@ -284,7 +284,7 @@ end
 
 
 function JB.Gamemode:AllowPlayerPickup( ply, object )
-    return (ply:Alive() and (JB.State == STATE_PLAYING or JB.State == STATE_SETUP or JB.State == STATE_LASTREQUEST) and IsValid(JB.TRANSMITTER) and JB.TRANSMITTER:GetJBWarden_ItemPickup());
+    return (ply:Alive() and (JB.State == STATE_PLAYING or JB.State == STATE_SETUP or JB.State == STATE_LASTREQUEST or JB.State == STATE_DAY) and IsValid(JB.TRANSMITTER) and JB.TRANSMITTER:GetJBWarden_ItemPickup());
 end
 
 function JB.Gamemode:PlayerUse( ply, ent )
