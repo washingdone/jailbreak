@@ -32,8 +32,8 @@
 
 
 local Day = JB.CLASS_Day();
-Day:SetName("War Day");
-Day:SetDescription("All prisoners get guns and attack guards. Guards are allowed to fight back.");
+Day:SetName("War");
+Day:SetDescription("All prisoners get guns and attack guards. Guards are allowed to fight back. No LR is given this day.");
 Day:SetStartCallback(function()
 	JB:BroadcastNotification("Today is a War Day!");
 	JB:BroadcastNotification("All prisoners are allowed to have weapons.");
@@ -41,4 +41,4 @@ Day:SetStartCallback(function()
 	JB:BroadcastNotification("All prisoners are KOS 30 seconds after the cell doors open.");
 end)
 Day:SetIcon(Material("icon16/flag_green.png"))
-local this = Day();
+Day();
