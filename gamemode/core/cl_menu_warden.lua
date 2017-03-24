@@ -44,7 +44,7 @@ function JB.MENU_WARDEN()
 		frame:SetTitle("Warden controls");
 		frame:SetWide(620);
 		
-		local yBottom = 30;
+		local yBottom = 25;
 		
 		
 		
@@ -52,14 +52,14 @@ function JB.MENU_WARDEN()
 				lbl:SetFont("JBLarge");
 				lbl:SetColor(JB.Color["#EEE"]);
 				lbl:SizeToContents();
-				lbl:SetPos(15,yBottom + 15);
+				lbl:SetPos(15,yBottom + 10);
 		
 		yBottom = lbl.y + lbl:GetTall();
 		
 		local function addButton(toggle,name,click)
 			if not toggle then
 				local btn = frame:Add("JB.Button");
-				btn:SetPos(15,yBottom+15);
+				btn:SetPos(15,yBottom+10);
 				btn:SetSize(frame:GetWide() - 30, 32);
 				btn:SetText(name);
 				btn.OnMouseReleased = click;
@@ -70,10 +70,10 @@ function JB.MENU_WARDEN()
 				lbl:SetFont("JBNormal");
 				lbl:SetColor(color_text);
 				lbl:SizeToContents();
-				lbl:SetPos(15+8,yBottom+15+32/2 - lbl:GetTall()/2);
+				lbl:SetPos(15+8,yBottom+10+32/2 - lbl:GetTall()/2);
 			
 				local btn = frame:Add("JB.Button");
-				btn:SetPos(frame:GetWide()-15-64,yBottom+15);
+				btn:SetPos(frame:GetWide()-15-64,yBottom+10);
 				btn:SetSize(64, 32);
 				btn:SetText(tobool(toggle) == true and "ON" or "OFF");
 				btn.OnMouseReleased = function()
@@ -90,12 +90,12 @@ function JB.MENU_WARDEN()
 		addButton(tostring(IsValid(JB.TRANSMITTER) and JB.TRANSMITTER:GetJBWarden_PVPDamage()),"Friendlyfire for prisoners",function() RunConsoleCommand("jb_warden_changecontrol","PVP",tostring(not (IsValid(JB.TRANSMITTER) and JB.TRANSMITTER:GetJBWarden_PVPDamage()))) end);
 		addButton(tostring(IsValid(JB.TRANSMITTER) and JB.TRANSMITTER:GetJBWarden_ItemPickup()),"Item pickup",function() RunConsoleCommand("jb_warden_changecontrol","Pickup",tostring(not (IsValid(JB.TRANSMITTER) and JB.TRANSMITTER:GetJBWarden_ItemPickup()))); end);
 		
-		yBottom = yBottom+16;
+		yBottom = yBottom+5;
 		local lbl = Label("Object spawning",frame);
 				lbl:SetFont("JBLarge");
 				lbl:SetColor(JB.Color["#EEE"]);
 				lbl:SizeToContents();
-				lbl:SetPos(15,yBottom + 15);
+				lbl:SetPos(15,yBottom + 10);
 		
 		yBottom = lbl.y + lbl:GetTall();
 		
@@ -103,21 +103,22 @@ function JB.MENU_WARDEN()
 		addButton(false,"Spawn breakable crate",function() RunConsoleCommand("jb_warden_spawn","Crate") end);
 		addButton(false,"Spawn blockade",function() RunConsoleCommand("jb_warden_spawn","Blockade") end);
 		
+		yBottom = yBottom+10;
 		local lbl = Label("Prebuilt Days",frame);
 				lbl:SetFont("JBLarge");
 				lbl:SetColor(JB.Color["#EEE"]);
 				lbl:SizeToContents();
-				lbl:SetPos(15,yBottom + 15);
+				lbl:SetPos(15,yBottom + 10);
 		
 		yBottom = lbl.y + lbl:GetTall();
 		
 		local left = frame:Add("JB.Panel");
-		left:SetSize(math.Round(frame:GetWide() * .35) - 15,412);
-		left:SetPos(10,yBottom + 15);
+		left:SetSize(math.Round(frame:GetWide() * .35) - 15,250);
+		left:SetPos(10,yBottom + 10);
 		
 		local right = frame:Add("JB.Panel");
-		right:SetSize(math.Round(frame:GetWide() * .65) - 15,412);
-		right:SetPos(left:GetWide() + left.x + 10,yBottom + 15);
+		right:SetSize(math.Round(frame:GetWide() * .65) - 15,250);
+		right:SetPos(left:GetWide() + left.x + 10,yBottom + 10);
 		
 		frame:SetTall(math.Round(yBottom + right:GetTall() + 25))
 		
