@@ -34,8 +34,6 @@
 
 local matPointerBg = Material("jailbreak_excl/pointers/pointer_background.png");
 local bubbles = {};
-local greenBubbles = {};
-
 
 local popModelMatrix = cam.PopModelMatrix
 local pushModelMatrix = cam.PushModelMatrix
@@ -86,7 +84,6 @@ hook.Add("HUDPaintOver","JB.HUDPaintOver.PaintContextMenu",function()
 	matrix:Scale( matrixScale )
 
 	steps = 2 * math.pi / #bubbles;
-	greenSteps = 2 * math.pi / #greenBubbles;
 
 	pushModelMatrix( matrix )
 		for k,v in pairs(bubbles)do
@@ -120,39 +117,6 @@ hook.Add("HUDPaintOver","JB.HUDPaintOver.PaintContextMenu",function()
 			draw.DrawText(v.text,"JBNormalShadow",x+32,y+64+14,color_black,1);
 			draw.DrawText(v.text,"JBNormal",x+32,y+64+14,color,1);
 		end
-		
-		for k,v in pairs(greenBubbles)do
-			if not v.ang then v.ang = 0 end;
-			v.ang= Lerp(mul,v.ang,(math.pi + (k-1)*greenSteps) % (2*math.pi));
-
-			x,y=  (size + 128)/2 + math.sin(v.ang) * size/2,(size + 128)/2 + math.cos(v.ang) * size/2;
-
-			setMaterial(matPointerBg);
-
-			if not v.color then v.color = Color(50,50,50,0) end
-
-			v.color.a = color.a;
-			if v.selected then
-				v.color.r = Lerp(mul,v.color.r,255);
-				v.color.g = Lerp(mul,v.color.g,255);
-				v.color.b = Lerp(mul,v.color.b,255);
-			else
-				v.color.r = Lerp(mul,v.color.r,180);
-				v.color.g = Lerp(mul,v.color.g,180);
-				v.color.b = Lerp(mul,v.color.b,180);
-			end
-
-			setColor(v.color);
-			drawTexturedRect(x-32,y-32,128,128);
-
-			if v.icon then
-				setMaterial(v.icon);
-				drawTexturedRect(x+16,y+16,32,32);
-			end
-			draw.DrawText(v.text,"JBNormalShadow",x+32,y+64+14,color_black,1);
-			draw.DrawText(v.text,"JBNormal",x+32,y+64+14,color,1);
-		end
-		
 	popModelMatrix()
 	popFilterMag()
 	popFilterMin()
@@ -164,22 +128,11 @@ hook.Add("Think","JB.Think.ContextMenuLogic",function()
 	if (color.a < 250) then return end
 
 	steps = 2 * math.pi / #bubbles;
-	steps = 2 * math.pi / #greenBubbles;
 
 	xRel,yRel=(-ScrW()/2 + gui.MouseX()) + (size/2),(-ScrH()/2 + gui.MouseY()) + (size/2);
 
 	for k,v in pairs(bubbles)do
 		x,y=  (size + 64)/2 + math.sin(v.ang) * size/2,(size + 64)/2 + math.cos(v.ang) * size/2;
-
-		if xRel > x-64 and xRel < x and yRel > y-64 and yRel < y then
-			v.selected = true;
-		else
-			v.selected = false;
-		end
-	end
-	
-	for k,v in pairs(greenBubbles)do
-		x,y=  (size + 128)/2 + math.sin(v.ang) * size/2,(size + 128)/2 + math.cos(v.ang) * size/2;
 
 		if xRel > x-64 and xRel < x and yRel > y-64 and yRel < y then
 			v.selected = true;
@@ -198,14 +151,6 @@ local function addBubble(text,icon,action)
 	table.insert(bubbles,tab);
 end
 
-local function addGreenBubble(text,icon,action)
-	local tab = {}
-	tab.icon = icon;
-	tab.text = text;
-	tab.action = action;
-	table.insert(greenBubbles,tab);
-end
-
 concommand.Add( "+menu_context",function()
 	if LocalPlayer().GetWarden and LocalPlayer():GetWarden() then
 		JB:DebugPrint("Opening context menu")
@@ -214,7 +159,6 @@ concommand.Add( "+menu_context",function()
 		color.a = 0;
 
 		bubbles = {};
-		greenBubbles = {};
 
 		addBubble("Move- White",Material("jailbreak_excl/pointers/generic.png"),function() RunConsoleCommand("jb_warden_placepointer","generic") end)
 		addBubble("Attack- White",Material("jailbreak_excl/pointers/exclamation.png"),function() RunConsoleCommand("jb_warden_placepointer","exclamation") end)
@@ -223,12 +167,12 @@ concommand.Add( "+menu_context",function()
 		addBubble("Avoid- White",Material("jailbreak_excl/pointers/cross.png"),function() RunConsoleCommand("jb_warden_placepointer","cross") end)
 		addBubble("None- White",nil,function() RunConsoleCommand("jb_warden_placepointer","0") end)
 		
-		addGreenBubble("Move- Green",Material("jailbreak_washingdone/pointers/generic_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","generic") end)
-		addGreenBubble("Attack- Green",Material("jailbreak_washingdone/pointers/exclamation_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","exclamation") end)
-		addGreenBubble("Check out- Green",Material("jailbreak_washingdone/pointers/question_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","question") end)
-		addGreenBubble("Line up- Green",Material("jailbreak_washingdone/pointers/line_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","line") end)
-		addGreenBubble("Avoid- Green",Material("jailbreak_washingdone/pointers/cross_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","cross") end)
-		addGreenBubble("None- Green",nil,function() RunConsoleCommand("jb_warden_placegreenpointer","0") end)
+		addBubble("Move- Green",Material("jailbreak_washingdone/pointers/generic_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","generic") end)
+		addBubble("Attack- Green",Material("jailbreak_washingdone/pointers/exclamation_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","exclamation") end)
+		addBubble("Check out- Green",Material("jailbreak_washingdone/pointers/question_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","question") end)
+		addBubble("Line up- Green",Material("jailbreak_washingdone/pointers/line_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","line") end)
+		addBubble("Avoid- Green",Material("jailbreak_washingdone/pointers/cross_green.png"),function() RunConsoleCommand("jb_warden_placegreenpointer","cross") end)
+		addBubble("None- Green",nil,function() RunConsoleCommand("jb_warden_placegreenpointer","0") end)
 		
 		gui.EnableScreenClicker(true);
 		contextEnabled = true;
@@ -243,13 +187,6 @@ local function closeContext()
 	contextEnabled = false;
 
 	for k,v in pairs(bubbles)do
-		if v.selected then
-			v.action();
-			JB:DebugPrint("Selected option '"..v.text.."' in context menu.");
-		end
-	end
-	
-	for k,v in pairs(greenBubbles)do
 		if v.selected then
 			v.action();
 			JB:DebugPrint("Selected option '"..v.text.."' in context menu.");
