@@ -37,9 +37,17 @@ Day:SetDescription("All prisoners hide from the guards. Guards wait in armory fo
 Day:SetStartCallback(function()
 	JB:BroadcastNotification("Today is a Hide and Seek Day!");
 	JB:BroadcastNotification("All must hide from the guards.");
-	JB:BroadcastNotification("Warden must open cell doors by 9:00.");
-	JB:BroadcastNotification("All prisoners are KOS 30 seconds after the cell doors open.");
+	JB:BroadcastNotification("All guards must wait in the armory until 9:00.");
+	JB:BroadcastNotification("Cell doors will open automatically at 9:30.");
 	JB:BroadcastNotification("The last remaining prisoner gets LR!");
+	timer.Simple(30,function()
+		for k,v in ipairs(ents.FindByName("cells"))do
+				v:Fire("Open",1)
+		end
+		timer.Simple(30,function()
+			JB:BroadcastNotification("All guards may now hunt for the prisoners!");
+		end)
+	end)
 end)
-Day:SetIcon(Material("icon16/flag_green.png"))
+Day:SetIcon(Material("jailbreak_washingdone/days/hide.png"))
 Day();
