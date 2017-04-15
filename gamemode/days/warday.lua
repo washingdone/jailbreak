@@ -37,8 +37,12 @@ Day:SetDescription("All prisoners get guns and attack guards. Guards are allowed
 Day:SetStartCallback(function()
 	JB:BroadcastNotification("Today is a War Day!");
 	JB:BroadcastNotification("All prisoners are allowed to have weapons.");
-	JB:BroadcastNotification("Warden must open cell doors by 9:00.");
-	JB:BroadcastNotification("All prisoners are KOS 30 seconds after the cell doors open.");
+	JB:BroadcastNotification("All prisoners are KOS at 9:00.");
+	timer.Simple(30,function()
+		for k,v in ipairs(ents.FindByName("cells"))do
+				v:Fire("Open",1)
+		end
+	end)
 end)
-Day:SetIcon(Material("icon16/flag_green.png"))
+Day:SetIcon(Material("jailbreak_washingdone/days/war.png"))
 Day();

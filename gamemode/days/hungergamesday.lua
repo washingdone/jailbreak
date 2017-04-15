@@ -38,9 +38,17 @@ Day:SetStartCallback(function()
 	JB:BroadcastNotification("Today is a Hunger Games Day!");
 	JB:BroadcastNotification("All prisoners are allowed to have weapons.");
 	JB:BroadcastNotification("Prisoners must attack each other when friendly fire is turned on.");
-	JB:BroadcastNotification("Warden must open cell doors by 9:00.");
-	JB:BroadcastNotification("Warden must turn on friendly fire 30 seconds after the cell doors are opened.");
+	JB:BroadcastNotification("Cell doors will open automatically at 9:30.");
+	JB:BroadcastNotification("Friendly fire will turn on at 9:00.");
 	JB:BroadcastNotification("The last remaining prisoner gets LR!");
+	timer.Simple(30,function()
+		for k,v in ipairs(ents.FindByName("cells"))do
+				v:Fire("Open",1)
+		end
+		timer.Simple(30,function()
+			RunConsoleCommand("jb_warden_changecontrol","PVP",tostring(not (IsValid(JB.TRANSMITTER) and JB.TRANSMITTER:GetJBWarden_PVPDamage())))
+		end)
+	end)
 end)
-Day:SetIcon(Material("icon16/flag_green.png"))
+Day:SetIcon(Material("jailbreak_washingdone/days/hunger.png"))
 Day();
