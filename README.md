@@ -23,7 +23,15 @@ Convar                                     | Effect
 `jb_config_rounds_per_map 10`                 | Rounds until mapvote - ONLY SET THIS IF YOU HAVE A MAPVOTE SYSTEM ON YOUR SERVER/COMMUNITY
 `jb_config_notify_lastguard 1/0`           | Send the "last guard kills all" notification
 
-## Developers
+## About the Authors
+
+### Excl
+Excl was the creator of the original Jailbreak gamemode, and rebuilt it from the ground up to make Jailbreak 7. He did almost all of the work for the gamemode, and released his code to the public when he ran out of time to work on it. This version is based off his work, and you can find the original code on his github, found at https://github.com/kurt-stolle/jailbreak
+
+### Washingdone
+Washingdone started with the project while trying to learn to code. What started out as a small hobby turned in to a big project after realising how he could modify the code to fit the main server he plays on. He used Excl's code to improve various things about it, and has made a lot of changes throughout it. You can find his work for it over at https://github.com/washingdone/jailbreak and http://steamcommunity.com/sharedfiles/filedetails/?id=889194200
+
+## For Developers
 
 ### Last requests
 This is how last requests are added. LR files have to put put in the lastrequests folder.
@@ -53,6 +61,40 @@ This is how last requests are added. LR files have to put put in the lastrequest
 
 	-- Tell JailBreak that this LR is ready for use.
 	LR();
+```
+
+### Pre-Built Days
+This is how pre-built days are added. Day files have to put put in the days folder.
+```lua
+
+	-- Initialize a new Day class
+	local Day = JB.CLASS_Day();
+
+	-- Give it a name and description
+	Day:SetName("War");
+	Day:SetDescription("All prisoners get guns and attack guards. Guards are allowed to fight back. No LR is given this day.");
+
+	-- Give it an Icon to display in the warden menu
+	Day:SetIcon(Material("jailbreak_washingdone/days/war.png"))
+
+	-- Setup what happens after the warden picks this day
+	Day:SetStartCallback(function()
+		JB:BroadcastNotification("Today is a War Day!");
+		JB:BroadcastNotification("All prisoners are allowed to have weapons.");
+		JB:BroadcastNotification("Cell doors will open automatically at 9:30.");
+		JB:BroadcastNotification("All prisoners are KOS at 9:00.");
+		timer.Simple(30,function()
+			for k,v in ipairs(ents.FindByName("cells"))do
+					v:Fire("Open",1)
+			end
+			timer.Simple(30,function()
+				JB:BroadcastNotification("All prisoners are now KOS!");
+			end)
+		end)
+	end)
+
+	-- Tell JailBreak that this Day is ready for use.
+	Day();
 ```
 
 ### Hooks
