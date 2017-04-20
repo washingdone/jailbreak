@@ -105,6 +105,7 @@ local matHealthBottom = Material("materials/jailbreak_excl/hud_health_bottom.png
 local matWarden = Material("materials/jailbreak_excl/hud_warden_bar.png");
 local matTime = Material("materials/jailbreak_excl/hud_time.png");
 local matLR = Material("materials/jailbreak_excl/lastrequest.png");
+local matDay = Material("materials/jailbreak_washingdone/day.png");
 local matHint = Material("materials/jailbreak_excl/pointers/pointer_background.png");
 local matQuestion = Material("materials/jailbreak_excl/pointers/question.png");
 local matRestricted = Material("materials/jailbreak_excl/hud_restricted.png")
@@ -310,6 +311,22 @@ local drawTimer = function()
 	drawSimpleShadowText(timerText,"JBNormal",scrW-16-64,y+32,JB.Color.white,1,1);
 end
 
+// DAY
+local dayName;
+local drawDay = function()
+	setMaterial(matDay)
+	setDrawColor(JB.Color.white)
+
+	drawTexturedRect(scrW/2 - 256, 4,512,128);
+
+	dayName = IsValid(JB.TRANSMITTER) and JB.TRANSMITTER:GetJBDayPicked()  or "0";
+	
+	-- convert to string
+	dayName = JB.ValidDay(JB.DayTypes[dayName]) and JB.DayTypes[dayName]:GetName() or "ERROR!";
+	
+	drawSimpleShadowText(dayName,"JBLarge",scrW/2 , 4 + 64,JB.Color.white,1,1);
+end
+
 // LAST REQUEST
 local lrGuard,lrPrisoner;
 local drawLastRequest = function()
@@ -405,6 +422,10 @@ JB.Gamemode.HUDPaint = function(gm)
 	end
 
 	drawTimer();
+	
+	if JB.State == STATE_DAY and JB.Day ~= "0" then
+		drawDay();
+	end
 
 	if JB.State == STATE_LASTREQUEST and JB.LastRequest ~= "0" then
 		drawLastRequest();
