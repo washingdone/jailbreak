@@ -312,17 +312,19 @@ local drawTimer = function()
 end
 
 // DAY
-local dayName = JB.TRANSMITTER:GetJBDayPicked();
+local dayName;
 local drawDay = function()
 	setMaterial(matDay)
 	setDrawColor(JB.Color.white)
 
 	drawTexturedRect(scrW/2 - 256, 4,512,128);
 
-	-- convert to string
-	dayName = IsValid(dayName) and dayName or "ERROR!";
+	dayName = IsValid(JB.TRANSMITTER) and JB.TRANSMITTER:GetJBDayPicked()  or "0";
 	
-	drawSimpleShadowText(dayName,"JBNormal",scrW/2 , 4 + 64,JB.Color.white,0,1);
+	-- convert to string
+	dayName = JB.ValidDay(JB.DayTypes[dayName]) and JB.DayTypes[dayName]:GetName() or "ERROR!";
+	
+	drawSimpleShadowText(dayName,"JBLarge",scrW/2 , 4 + 64,JB.Color.white,1,1);
 end
 
 // LAST REQUEST
